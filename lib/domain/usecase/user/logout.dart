@@ -1,0 +1,13 @@
+
+
+import 'package:fpdart/fpdart.dart';
+import 'package:vba/core/usecase/usecase.dart';
+import 'package:vba/domain/repository/auth/auth.dart';
+import 'package:vba/service_locator.dart';
+
+class LogoutUseCase implements UseCase<Either, dynamic> {
+  @override
+  Future<Either> call({params}) async {
+    return sl<AuthRepository>().signOut();
+  }
+}
