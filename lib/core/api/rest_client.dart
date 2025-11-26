@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 import 'package:vba/core/constants/app_urls.dart';
+import 'package:vba/data/responses/feed_response.dart';
 import 'package:vba/data/responses/user_me_response.dart';
 import 'package:vba/data/responses/user_response.dart';
 
@@ -19,4 +20,11 @@ abstract class RestClient {
 
   @GET('/users/public/{id}')
   Future<UserMeResponse> userPublic(@Path('id') String? id);
+
+  @GET('/post/feed')
+  Future<FeedResponse> getFeed(
+    @Query('page') int page,
+    @Query('take') int take,
+    @Query('order') String order,
+  );
 }
