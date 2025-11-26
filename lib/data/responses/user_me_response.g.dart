@@ -17,4 +17,7 @@ UserMeResponse _$UserMeResponseFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$UserMeResponseToJson(UserMeResponse instance) =>
-    <String, dynamic>{'data': instance.data, 'messages': instance.messages};
+    <String, dynamic>{
+      'data': instance.data,
+      'messages': instance.messages,
+    };
