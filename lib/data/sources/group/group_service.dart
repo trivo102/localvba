@@ -16,6 +16,19 @@ abstract class GroupService  {
     required int take,
     String? searchQuery,
   });
+
+  Future<Either<String, List<GroupModel>>> getRecommendedGroups({
+    required int page,
+    required int take,
+    String? searchQuery,
+  });
+
+  Future<Either<String, List<GroupModel>>> getPendingGroups({
+    required int page,
+    required int take,
+    String? searchQuery,
+  });
+  
 }
 
 
@@ -77,6 +90,66 @@ class GroupServiceImpl extends GroupService {
         return const Left('UNAUTHORIZED');
       }
       return Left(e.message ?? 'Failed to fetch attended groups');
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, List<GroupModel>>> getRecommendedGroups({
+    required int page,
+    required int take,
+    String? searchQuery,
+  }) async {
+    try {
+      final client = RestClient(localDio);
+      final response = await client.getRecommendedGroups(
+        page,
+        take,
+        'DESC',
+        'createdAt',
+        searchQuery ?? '',
+        false,
+      );
+      if (response.data?.data != null) {
+        return Right(response.data!.data!);
+      }
+      return const Left('No data available');
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401 || e.error == 'UNAUTHORIZED') {
+        return const Left('UNAUTHORIZED');
+      }
+      return Left(e.message ?? 'Failed to fetch recommended groups');
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  @override
+  Future<Either<String, List<GroupModel>>> getPendingGroups({
+    required int page,
+    required int take,
+    String? searchQuery,
+  }) async {
+    try {
+      final client = RestClient(localDio);
+      final response = await client.getPendingGroups(
+        page,
+        take,
+        'DESC',
+        'createdAt',
+        searchQuery ?? '',
+        false,
+      );
+      if (response.data?.data != null) {
+        return Right(response.data!.data!);
+      }
+      return const Left('No data available');
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401 || e.error == 'UNAUTHORIZED') {
+        return const Left('UNAUTHORIZED');
+      }
+      return Left(e.message ?? 'Failed to fetch pending groups');
     } catch (e) {
       return Left(e.toString());
     }

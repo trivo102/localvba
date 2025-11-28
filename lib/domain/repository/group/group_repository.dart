@@ -13,4 +13,16 @@ abstract class GroupRepository {
     required int take,
     String? searchQuery,
   });
+
+  Future<Either<String, List<GroupModel>>> getRecommendedGroups({
+    required int page,
+    required int take,
+    String? searchQuery,
+  });
+
+  Future<Either<String, List<GroupModel>>> getPendingGroups({
+    required int page,
+    required int take,
+    String? searchQuery,
+  });
 }

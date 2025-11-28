@@ -48,6 +48,8 @@ dependencies:
   shared_preferences: ^2.5.3
   flutter_widget_from_html: ^0.17.1
   intl: ^0.19.0
+  flutter_native_splash: ^2.4.7
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -70,9 +72,9 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -99,3 +101,42 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+
+flutter_native_splash:
+  # 1. Màu nền (bắt buộc)
+  color: "#FFFFFF" 
+  # color_dark: "#121212" # (Tùy chọn) Màu nền cho Dark Mode
+
+  # 2. Ảnh Logo (nằm giữa màn hình)
+  image: "assets/images/splash_logo.png"
+  # image_dark: "assets/images/splash_logo_dark.png" # (Tùy chọn) Logo cho Dark Mode
+
+  # 3. Cấu hình cho Android 12+ (Rất quan trọng vì Android 12 đổi cơ chế Splash)
+  android_12:
+    image: "assets/images/splash_logo.png"
+    color: "#FFFFFF"
+    # icon_background_color: "#FFFFFF" # Màu tròn bao quanh icon
+
+  # 4. (Tùy chọn) Branding - Ảnh hiển thị ở dưới cùng màn hình
+  # branding: "assets/images/branding.png"
+  # branding_bottom: true
+
+  # 5. Fullscreen? (Tắt thanh trạng thái phía trên)
+  fullscreen: true
+
+
+flutter_launcher_icons:
+  android: "launcher_icon" # Tên file icon sinh ra trên Android
+  ios: true                # Có tạo cho iOS không? -> Có
+  image_path: "assets/icons/icon.png" # Đường dẫn ảnh gốc
+  min_sdk_android: 21      # Hỗ trợ Android 5.0 trở lên
+
+  # --- CẤU HÌNH NÂNG CAO CHO ANDROID (ADAPTIVE ICONS) ---
+  # Android 8.0+ sử dụng icon thích ứng (Adaptive Icon) chia làm 2 lớp:
+  # 1. Background (Màu nền hoặc ảnh nền)
+  # 2. Foreground (Logo chính)
+  # Nếu không cấu hình phần này, icon trên Android có thể bị lọt thỏm trong vòng tròn trắng rất xấu.
+  
+  adaptive_icon_background: "#FFFFFF" # Hoặc đường dẫn ảnh nền: "assets/icons/background.png"
+  adaptive_icon_foreground: "assets/icons/icon.png" # Thường dùng luôn ảnh icon chính

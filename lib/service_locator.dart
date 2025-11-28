@@ -2,16 +2,26 @@ import 'package:get_it/get_it.dart';
 import 'package:vba/core/api/dio_provider.dart';
 import 'package:vba/data/repository/auth/auth_repository_impl.dart';
 import 'package:vba/data/repository/group/group_repository_impl.dart';
+import 'package:vba/data/repository/group/group_user_repository_impl.dart';
 import 'package:vba/data/repository/post/feed_repository_impl.dart';
+import 'package:vba/data/repository/post/group_post_repository_impl.dart';
 import 'package:vba/data/sources/auth/auth_service.dart';
 import 'package:vba/data/sources/group/group_service.dart';
+import 'package:vba/data/sources/group/group_user_service.dart';
 import 'package:vba/data/sources/post/feed_service.dart';
+import 'package:vba/data/sources/post/group_post_service.dart';
 import 'package:vba/domain/repository/auth/auth.dart';
 import 'package:vba/domain/repository/group/group_repository.dart';
+import 'package:vba/domain/repository/group/group_user_repository.dart';
 import 'package:vba/domain/repository/post/feed_repository.dart';
+import 'package:vba/domain/repository/post/group_post_repository.dart';
 import 'package:vba/domain/usecase/group/get_attended_groups.dart';
+import 'package:vba/domain/usecase/group/get_group_users_usecase.dart';
 import 'package:vba/domain/usecase/group/get_managed_groups.dart';
+import 'package:vba/domain/usecase/group/get_pending_groups.dart';
+import 'package:vba/domain/usecase/group/get_recommended_groups.dart';
 import 'package:vba/domain/usecase/post/get_feed_usecase.dart';
+import 'package:vba/domain/usecase/post/get_group_posts_usecase.dart';
 import 'package:vba/domain/usecase/user/get_user.dart';
 import 'package:vba/domain/usecase/user/logout.dart';
 import 'package:vba/domain/usecase/user/signin.dart';
@@ -42,4 +52,16 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GroupRepository>(GroupRepositoryImpl());
   sl.registerSingleton<GetManagedGroupsUseCase>(GetManagedGroupsUseCase());
   sl.registerSingleton<GetAttendedGroupsUseCase>(GetAttendedGroupsUseCase());
+  sl.registerSingleton<GetRecommendedGroupsUseCase>(GetRecommendedGroupsUseCase());
+  sl.registerSingleton<GetPendingGroupsUseCase>(GetPendingGroupsUseCase(sl<GroupRepository>()));
+
+  // Group feed DI
+  sl.registerSingleton<GroupPostService>(GroupPostServiceImpl());
+  sl.registerSingleton<GroupPostRepository>(GroupPostRepositoryImpl());
+  sl.registerLazySingleton<GetGroupPostsUseCase>(() => GetGroupPostsUseCase());
+
+  // Group users DI
+  sl.registerSingleton<GroupUserService>(GroupUserServiceImpl());
+  sl.registerSingleton<GroupUserRepository>(GroupUserRepositoryImpl());
+  sl.registerLazySingleton<GetGroupUsersUseCase>(() => GetGroupUsersUseCase());
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:vba/data/models/group/group_model.dart';
 import 'package:vba/presentation/groups/managed_groups/bloc/managed_groups_bloc.dart';
 
@@ -206,7 +207,7 @@ class ManagedGroupCard extends StatelessWidget {
       elevation: 2,
       child: InkWell(
         onTap: () {
-          // TODO: Navigate to group detail
+          context.push('/group_detail', extra: group);
         },
         child: Padding(
           padding: const EdgeInsets.all(12.0),

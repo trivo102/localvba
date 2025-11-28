@@ -3,17 +3,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vba/core/commom/bloc/authentication/bloc/authentication_bloc.dart';
 import 'package:vba/presentation/router.dart';
 import 'package:vba/service_locator.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await initializeDependencies();
+  FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
